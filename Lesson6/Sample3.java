@@ -6,9 +6,10 @@ class Sample3{
         System.out.println("いくつ*を出力しますか？");
         int res = scan.nextInt();
         //for(:繰り返すごとに実行される？:)
-        
+
         for(int i = 0; i < res; i++){
-            System.out.print("*");
+            System.out.printf("*(%02d) ", i );
+            if(i % 10 == 9)System.out.println();
         }
     }
 }
