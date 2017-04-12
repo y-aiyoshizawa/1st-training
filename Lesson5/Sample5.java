@@ -1,9 +1,12 @@
 import java.util.*;
+
 class Sample5{
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
         int res = scan.nextInt();
+
+
 
         switch(res){
         case 1:
@@ -16,5 +19,6 @@ class Sample5{
             System.out.println("1か2を入力してください。");
             break;
         }
+
     }
 }
