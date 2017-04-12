@@ -7,7 +7,7 @@ class SampleP2{
 
         int num = scan.nextInt();
 
-        if((num & 1) == 1){
+        if((num & 0x1) == 0x1){
             System.out.println("奇数です。");
         }else{
             System.out.println("偶数です。");
