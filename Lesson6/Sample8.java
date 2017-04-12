@@ -1,14 +1,14 @@
 class Sample8{
     public static void main(String[] args) {
-        boolean bl = true;
+        boolean boo = true;
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
-                if(bl){
+                if(boo){
                     System.out.print("*");
-                    bl = false;
+                    boo = false;
                 }else{
                     System.out.print("-");
-                    bl = true;
+                    boo = true;
                 }
             }
             System.out.println();
