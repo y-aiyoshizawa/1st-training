@@ -18,7 +18,7 @@ class Sample9{
         System.out.println("ソートします。");
         for(int i = 0; i < test.length - 1; i++){
             for(int j = i + 1; j < test.length; j++){
-                if(test[i] > test[j]){
+                if(test[i] < test[j]){
                     int temp = test[i];
                     test[i] = test[j];
                     test[j] =  temp;
