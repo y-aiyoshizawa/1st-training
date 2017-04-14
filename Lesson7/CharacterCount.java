@@ -1,10 +1,8 @@
-import java.util.*;
-import java.io.*;
-class Sample{
+class CharacterCount{
     public static void main(String[] args) throws IOException{
         Map<Character,Integer> map = new HashMap<Character,Integer>();
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scan= new Scanner(System.in);
 
         while(scan.hasNext()){
             String str = scan.next();
@@ -21,5 +19,4 @@ class Sample{
             System.out.println(key + "=" + map.get(key));
         }
     }
-
 }
