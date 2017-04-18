@@ -6,7 +6,14 @@ class Sample8{
         car1 = new Car8();
         car1.setNum(1234);
         car1.setGas(20.5);
-        car1.setName("１号車");
+
+        String[] name = new String[1];
+        name[0] = "１号";
+
+        System.out.println("name = " + name[0]);
+        car1.setName(name);
+        System.out.println("name = " + name[0]);
+
         System.out.println("car1の情報");
         car1.show();
     }
@@ -32,9 +39,10 @@ class Car8{
             System.out.println("不吉な数字です");
         }
     }
-    public void setName(String name){
-        this.name = name;
-        System.out.println("車の名前に" + name + "をセット");
+    public void setName(String[] name){
+        name[0] = "abc";
+        this.name = name[0];
+        System.out.println("車の名前に" + name[0] + "をセット");
     }
     public void show(){
         System.out.println("車のナンバー:" + num);
