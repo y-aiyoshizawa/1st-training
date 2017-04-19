@@ -15,11 +15,9 @@ class CharacterCount{
 
         Map<Character,Integer> map = new TreeMap<Character,Integer>();
         Scanner scan = null;
-        try {
-            scan = new Scanner(Paths.get("E:\\user\\yuta\\Documents\\Git\\1st-training\\Lesson10\\Sample7.java"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        scan = new Scanner(System.in);
+
 
         //処理
         while(scan.hasNext()){
@@ -39,23 +37,19 @@ class CharacterCount{
         }
 
 
-        ArrayList<Entry<Character,Integer>> list = new ArrayList<>();
-
-        for(Entry<Character,Integer> e : map.entrySet()){
-            list.add(e);
-        }
+        ArrayList<Entry<Character,Integer>> list = new ArrayList<>(map.entrySet());
         Collections.sort(list, (a,b) ->b.getValue() - a.getValue());
 
         for(Entry<Character,Integer> e : list){
             System.out.println(e.getKey() + "=" + e.getValue());
         }
 
-        //最大値を取得
+
         int max = list.get(0).getValue();
         //*を表示
         for(int i = max; i > 0; i--){
             for(Entry<Character,Integer> e : list){
-                if(e.getValue() > i){
+                if(e.getValue() >= i){
                     System.out.print("*");
                 }else{
                     break;
