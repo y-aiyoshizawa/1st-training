@@ -6,9 +6,7 @@ public class Kaibun {
 			if(!hantei(Integer.toOctalString(i)))continue;		// 8進数の回文判定
 			if(!hantei(Integer.toBinaryString(i)))continue;		// 2進数の回文判定
 			System.out.println(i);
-			break;
 		}
-
 	}
 
 	//回文かどうかの判定
