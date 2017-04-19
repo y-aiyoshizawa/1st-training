@@ -1,16 +1,20 @@
 class Sample2{
     public static void main(String[] args) {
-        Vehicle2[] vd = new Vehicle2[2];
+        Vehicle2[] vc = new Vehicle2[2];
 
-        vd[0] = new Car2(1234,12.3);
-        vd[0].setSpeed(120);
+        vc[0] = new Car2(1234,12.3);
+        vc[0].setSpeed(120);
 
-        vd[1] = new Plane2(12);
-        vd[1].setSpeed(120);
+        vc[1] = new Plane2(12);
+        vc[1].setSpeed(120);
 
-        for(int i = 0; i < vd.length; i++){
-            if(instanceof )
-            vd[i].show();
+        for(int i = 0; i < vc.length; i++){
+            if(vc[i] instanceof Car2){
+                System.out.println("vc["+i+"]はCar2クラスです");
+            }else{
+                System.out.println("vc["+i+"]はPlane2クラスです");
+            }
+
         }
     }
 }
