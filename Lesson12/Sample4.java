@@ -7,11 +7,9 @@ class Sample4{
 }
 interface iVehicle4{
     void vshow();
-    void show();
 }
 interface iMaterial4{
     void mshow();
-    void show();
 }
 class Car4 implements iVehicle4,iMaterial4{
     private int num;
@@ -32,8 +30,5 @@ class Car4 implements iVehicle4,iMaterial4{
     }
     public void mshow(){
         System.out.println("車の材質は鉄です");
-    }
-    public void show(){
-        System.out.println("aaa");
     }
 }
