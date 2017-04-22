@@ -24,7 +24,7 @@ class En{
                 }
             }
         }
-        System.out.println((double)c / max * max * 4);
+        System.out.println((double)c / (max * max) * 4);
     }
 
 }
