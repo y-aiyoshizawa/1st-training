@@ -21,7 +21,7 @@ public class Calc {
                 try{
                     polishQueue = reversePolish(formula);
                     compute(polishQueue);
-                } catch (GrammarException e) {
+                } catch (FormulaException e) {
                     System.out.println("----------文法エラー----------");
                     System.out.println("変数");
                     System.out.println("[数値|変数] 演算子 [数値|変数]");
@@ -40,7 +40,7 @@ public class Calc {
                         System.out.println("計算できる範囲は"+Integer.MIN_VALUE+"～"+Integer.MAX_VALUE+"です。");
                     }
                 }catch(NumberFormatException e){
-                    System.out.println("入力した値が大きすぎるます。");
+                    System.out.println("入力した値が大きすぎます。");
                     System.out.println("0～" + Integer.MAX_VALUE + "の値を入力してください。");
                 }
 
@@ -56,7 +56,7 @@ public class Calc {
 
     //Stringの式を逆ポーランド記法に変換し、Queueで返す
     public static Queue<String> reversePolish(String formula)
-    throws GrammarException{
+    throws FormulaException{
         formula = formula.replaceAll(" ", "");
         //文法チェック
         if(!(
@@ -65,7 +65,7 @@ public class Calc {
             formula.matches("[a-zA-Z]=(\\d+|[a-zA-Z])") ||
             formula.matches("[a-zA-Z]=(\\d+|[a-zA-Z])([*+-/](\\d+|[a-zA-Z])){1,2}")
         )){
-            throw new GrammarException();
+            throw new FormulaException();
         }
 
         //式を単語に分解する
@@ -100,6 +100,8 @@ public class Calc {
         }
         return polishQueue;
     }
+	
+	//逆ポーランド記述のQueueを計算して表示する
     public static void compute(Queue<String> polishQueue)
          throws ArithmeticException,NumberFormatException{
 
@@ -130,18 +132,18 @@ public class Calc {
                 }
             }else if(word.equals("=")){
                 String var = polishQueue.poll();
-                String sum = compStack.pop();
+                String sum = compStack.peek();
                 vars[var.charAt(0)] = Integer.parseInt(sum);
-                compStack.push(sum);
             }
         }
         System.out.println("出力 >" + compStack.pop());
     }
 }
 
-class GrammarException extends Exception{
-    public GrammarException() {}
-    public GrammarException(String str){
+//文法エラーの例外
+class FormulaException extends Exception{
+    public FormulaException() {}
+    public FormulaException(String str){
         super(str);
     }
 }
