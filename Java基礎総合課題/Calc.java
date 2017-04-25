@@ -22,26 +22,26 @@ public class Calc {
                     polishQueue = reversePolish(formula);
                     compute(polishQueue);
                 } catch (FormulaException e) {
-                    System.out.println("----------文法エラー----------");
-                    System.out.println("変数");
-                    System.out.println("[数値|変数] 演算子 [数値|変数]");
-                    System.out.println("[数値|変数] 演算子 [数値|変数] 演算子 [数値|変数]");
-                    System.out.println("変数 代入 [数値|変数]");
-                    System.out.println("変数 代入 [数値|変数] 演算子 [数値|変数]");
-                    System.out.println("変数 代入 [数値|変数] 演算子 [数値|変数] 演算子 [数値|変数]");
-                    System.out.println("上記の形式で入力してください。");
-                    System.out.println("変数に使える文字はA～Z,a～zの英字一文字です。");
-                    System.out.println("------------------------------");
+                    System.out.println("出力 >----------文法エラー----------");
+                    System.out.println("　　 >変数");
+                    System.out.println("　　 >[数値|変数] 演算子 [数値|変数]");
+                    System.out.println("　　 >[数値|変数] 演算子 [数値|変数] 演算子 [数値|変数]");
+                    System.out.println("　　 >変数 代入 [数値|変数]");
+                    System.out.println("　　 >変数 代入 [数値|変数] 演算子 [数値|変数]");
+                    System.out.println("　　 >変数 代入 [数値|変数] 演算子 [数値|変数] 演算子 [数値|変数]");
+                    System.out.println("　　 >上記の形式で入力してください。");
+                    System.out.println("　　 >変数に使える文字はA～Z,a～zの英字一文字です。");
+                    System.out.println("　　 >------------------------------");
                 }catch(ArithmeticException e){
                     if(e.getMessage().equals("/ by zero")){
-                        System.out.println("0で除算することは出来ません。");
+                        System.out.println("出力 >0で除算することは出来ません。");
                     }else{
-                        System.out.println("計算結果がオーバーフローしてしまいました。");
-                        System.out.println("計算できる範囲は"+Integer.MIN_VALUE+"～"+Integer.MAX_VALUE+"です。");
+                        System.out.println("出力 >計算結果がオーバーフローしてしまいました。");
+                        System.out.println("　　 >計算できる範囲は"+Integer.MIN_VALUE+"～"+Integer.MAX_VALUE+"です。");
                     }
                 }catch(NumberFormatException e){
-                    System.out.println("入力した値が大きすぎます。");
-                    System.out.println("0～" + Integer.MAX_VALUE + "の値を入力してください。");
+                    System.out.println("出力 >入力した値が大きすぎます。");
+                    System.out.println("　　 >0～" + Integer.MAX_VALUE + "の値を入力してください。");
                 }
 
                 System.out.print("入力 >");
@@ -76,8 +76,8 @@ public class Calc {
         //代入の場合の処理
         int i = 0;
         if(words.length > 1 && words[1].equals("=")){
-            operatorStack.add(words[1]);
-            operatorStack.add(words[0]);
+            operatorStack.push(words[0]);
+            operatorStack.push(words[1]);
             i = 2;
         }
 
