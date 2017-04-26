@@ -7,12 +7,12 @@ import java.util.Queue;
 
 //10*3/5　結果:0を何とかする
 public class Calc {
-    static int[] vars = new int[255];
+    static int[] vars = new int[255];   //変数の値を入れる配列
     public static void main(String[] args) {
         System.out.println("対話型電卓を開始します。");
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            Queue<String> polishQueue = new ArrayDeque<>();
+            Queue<String> polishQueue = new ArrayDeque<>(); //逆ポーランド記法の単語が入るキュー
 
             while(true){
                 System.out.print("入力 >");
