@@ -9,18 +9,23 @@ import java.util.Queue;
 public class Calc {
     static int[] vars = new int[255];
     public static void main(String[] args) {
-        System.out.println(10 * 3 / 5);
         System.out.println("対話型電卓を開始します。");
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             Queue<String> polishQueue = new ArrayDeque<>();
 
-            System.out.print("入力 >");
-            String formula = br.readLine();
-            while(!formula.equals("exit")){
+            while(true){
+                System.out.print("入力 >");
+                String formula = br.readLine();
+
+                if(formula.toLowerCase().equals("exit")){
+                    break;
+                }
+
                 try{
                     polishQueue = reversePolish(formula);
-                    compute(polishQueue);
+                    int sum = compute(polishQueue);
+                    System.out.println("出力 >" + sum);
                 } catch (FormulaException e) {
                     System.out.println("出力 >----------文法エラー----------");
                     System.out.println("　　 >変数");
@@ -43,9 +48,6 @@ public class Calc {
                     System.out.println("出力 >入力した値が大きすぎます。");
                     System.out.println("　　 >0～" + Integer.MAX_VALUE + "の値を入力してください。");
                 }
-
-                System.out.print("入力 >");
-                formula = br.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +59,7 @@ public class Calc {
     //Stringの式を逆ポーランド記法に変換し、Queueで返す
     public static Queue<String> reversePolish(String formula)
     throws FormulaException{
-        formula = formula.replaceAll(" ", "");
+        formula = formula.replaceAll("\\s+", "");  //ブランクの削除
         //文法チェック
         if(!(
             formula.matches("[a-zA-Z]") ||
@@ -65,13 +67,14 @@ public class Calc {
             formula.matches("[a-zA-Z]=(\\d+|[a-zA-Z])") ||
             formula.matches("[a-zA-Z]=(\\d+|[a-zA-Z])([*+-/](\\d+|[a-zA-Z])){1,2}")
         )){
+            //文法エラー
             throw new FormulaException();
         }
 
-        //式を単語に分解する
-        String[] words = formula.replaceAll("(\\d+|[a-zA-Z]|[*+-/=])","$1,").split(",");
-        Queue<String> polishQueue = new ArrayDeque<>();		//逆ポーランド記法が入るキュー
-        Deque<String> operatorStack = new ArrayDeque<>();	//一時的に演算子を入れておくスタック
+
+        String[] words = formula.replaceAll("(\\d+|[a-zA-Z]|[*+-/=])","$1,").split(",");    //式を単語に分解する
+        Queue<String> polishQueue = new ArrayDeque<>();     //逆ポーランド記法が入るキュー
+        Deque<String> operatorStack = new ArrayDeque<>();   //一時的に演算子を入れておくスタック
 
         //代入の場合の処理
         int i = 0;
@@ -84,25 +87,27 @@ public class Calc {
         for(;i < words.length; i++){
             String word = words[i];
             if(word.matches("\\d+|[a-zA-Z]")){
-                //数字|変数ならpolishQueueにwordを追加
+                //数字|変数ならキューにwordを追加
                 polishQueue.add(word);
             }else if(word.matches("[+-]")){
-                while(!operatorStack.isEmpty() && operatorStack.peek().matches("[/*]")){
-                    polishQueue.add(operatorStack.pop());
-                }
+                //+-ならスタックにwordを入れる
                 operatorStack.push(word);
             }else if(word.matches("[/*]")){
-                operatorStack.push(word);
+                //"*""/"ならiをi+1のwordsの値をにキューに入れる
+                //そのあとwordをキューに入れる
+                polishQueue.add(words[++i]);
+                polishQueue.add(word);
             }
         }
         while(!operatorStack.isEmpty()){
+            //スタックに残っているものをキューに追加
             polishQueue.add(operatorStack.pop());
         }
         return polishQueue;
     }
-	
-	//逆ポーランド記述のQueueを計算して表示する
-    public static void compute(Queue<String> polishQueue)
+
+    //逆ポーランド記述のQueueを計算して表示する
+    public static int compute(Queue<String> polishQueue)
          throws ArithmeticException,NumberFormatException{
 
         Deque<String> compStack = new ArrayDeque<>();
@@ -110,10 +115,13 @@ public class Calc {
         while(!polishQueue.isEmpty()){
             String word = polishQueue.poll();
             if(word.matches("\\d+")){
+                //数字ならそののままスタックに入れる
                 compStack.push(word);
             }else if(word.matches("[a-zA-Z]")){
+                //変数なら変数に入っている値をスタックに入れる
                 compStack.push(String.valueOf(vars[word.charAt(0)]));
             }else if(word.matches("[*+-/]")){
+                //*+-/にあった計算をする
                 int num1 = Integer.parseInt(compStack.pop());
                 int num2 = Integer.parseInt(compStack.pop());
                 switch(word){
@@ -131,12 +139,13 @@ public class Calc {
                     break;
                 }
             }else if(word.equals("=")){
+                //=ならスタックの値(合計)と入れる変数を取り出し変数に合計を入れる
                 String var = polishQueue.poll();
                 String sum = compStack.peek();
                 vars[var.charAt(0)] = Integer.parseInt(sum);
             }
         }
-        System.out.println("出力 >" + compStack.pop());
+        return Integer.parseInt(compStack.pop());
     }
 }
 
